@@ -23,7 +23,7 @@ public class Orders {
     @Id
     private Integer id;
 
-    private Date registerDate;
+    private Date registerDay;
     private String status;
     private User salesMan;
     // Map<key: Id product, value: corresponding product>

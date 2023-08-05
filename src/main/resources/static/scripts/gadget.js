@@ -1,4 +1,4 @@
-let sessionName = sessionStorage.getItem('userName');
+const loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
 
 const nameFormat = /^\w[A-Za-z \s]+$/;
 
@@ -133,23 +133,21 @@ form.addEventListener("submit", function(event) {
         'name' : document.getElementById("ProductName").value,
         'description' : document.getElementById("ProductDescription").value,
         'price': document.getElementById("ProductPrice").value,
+        'availability': true,
         'quantity' : document.getElementById("ProductQuantity").value,
-        'photography' : document.getElementById("ProductPhoto").value,
-        'availability': true
+        'photography' : document.getElementById("ProductPhoto").value
     }
 
     console.log(dataObject);
 
     $.ajax({    
-        url: 'http://140.238.190.51:8080/api/gadget/new',
+        url: 'http://localhost:8080/api/gadget/new',
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json',
         async: false,
         data: JSON.stringify(dataObject),
-        success: function(response) {
-            sessionStorage.setItem('userName', response.name);
-            
+        success: function(response) { 
             Swal.fire(
                 'Genial',
                 'Un nuevo producto ha sido agregado',
@@ -165,20 +163,19 @@ form.addEventListener("submit", function(event) {
 
 
 $(document).ready(function() {
-    let sessionName = sessionStorage.getItem("userName");
 
-    if (sessionName === null) {
+    if (loggedUser.name === null) {
         document.getElementById("userRegistered").innerText = "";
         document.getElementById("content").innerHTML = "<h2> Error al obtener usuario, regresa a inicio de sesión </h2><hr>" +
         "<button class='btn btn-outline-secondary justify-content-center d-inline-flex' onclick='location.href=\'../index.html\''>";
-    } else if (sessionName === "null"){
+    } else if (loggedUser.name === "null"){
         document.getElementById("userRegistered").innerText = "No existe un usuario con esas credenciales";
         document.getElementById("content").innerHTML = "";
-    } else if (sessionName != null) {
-        document.getElementById("userRegistered").innerText = "Bienvenido " + sessionName;
+    } else if (loggedUser.name != null) {
+        document.getElementById("userRegistered").innerText = "Bienvenido " + loggedUser.name;
     
         $.ajax({
-            url: 'http://140.238.190.51:8080/api/gadget/all',
+            url: 'http://localhost:8080/api/gadget/all',
             type: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -193,29 +190,27 @@ $(document).ready(function() {
 
 function showData(data) {
 
-    console.log(data);
+    let appendGadgetTable = '';
 
-    let appendUserTable = '';
-
-    appendUserTable += '<thead><tr><th>ID</th><th>BRAND</th><th>CATEGORY</th><th>NAME</th><th>DESCRIPTION</th><th>PRICE</th><th>AVAILABILITY</th><th>QUANTITY</th><th>PHOTOGRAPHY</th></tr></thead><tbody>';
+    appendGadgetTable += '<thead><tr><th>ID</th><th>BRAND</th><th>CATEGORY</th><th>NAME</th><th>DESCRIPTION</th><th>PRICE</th><th>AVAILABILITY</th><th>QUANTITY</th><th>PHOTOGRAPHY</th></tr></thead><tbody>';
 
     data.forEach((data) => {
-        appendUserTable += '<tr>';
+        appendGadgetTable += '<tr>';
         Object.values(data).slice(0, -1).forEach((userAttributes) => {
             if (userAttributes === true || userAttributes === false) {
-            appendUserTable += userAttributes ? '<td>Sí</td>' : '<td>No</td>';
+            appendGadgetTable += userAttributes ? '<td>Sí</td>' : '<td>No</td>';
             } else {
-            appendUserTable += '<td>' + userAttributes + '</td>';
+            appendGadgetTable += '<td>' + userAttributes + '</td>';
             }
         });
         let dataAttributes = JSON.stringify(data);
-        appendUserTable += '<td> <img src="'+data.photography+'" alt="Imágen del producto" class="img-thumbnail"> </td>'
-        appendUserTable += "<td> <button class='btn btn-outline-warning' onclick='actualizarDatos("+ dataAttributes +");'>Editar</button></td>";
-        appendUserTable += '<td> <button class="btn btn-outline-danger" onclick="eliminarDatos('+ data.id +')">Eliminar</button> </td>';
-        appendUserTable += '</tr>';
+        appendGadgetTable += '<td> <img src="'+data.photography+'" alt="Imágen del producto" class="img-thumbnail"> </td>';
+        appendGadgetTable += "<td> <button class='btn btn-outline-warning' onclick='actualizarDatos("+ dataAttributes +");'>Editar</button></td>";
+        appendGadgetTable += '<td> <button class="btn btn-outline-danger" onclick="eliminarDatos('+ data.id +')">Eliminar</button> </td>';
+        appendGadgetTable += '</tr>';
     });
 
-    document.getElementById('gadgetTable').innerHTML = appendUserTable;
+    document.getElementById('gadgetTable').innerHTML = appendGadgetTable;
 }
 
 
@@ -226,7 +221,7 @@ function actualizarDatos(dataToEdit) {
 
 function eliminarDatos(id) {
     $.ajax({
-        url: 'http://140.238.190.51:8080/api/gadget/' + id,
+        url: 'http://localhost:8080/api/gadget/' + id,
         type: 'DELETE',
         dataType: 'json',
         success: function(response) {

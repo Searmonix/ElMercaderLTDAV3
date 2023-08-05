@@ -55,12 +55,12 @@ form.addEventListener("submit", function(event) {
         console.log("Funciona esta parte");
 
         $.ajax({
-            url: 'http://140.238.190.51:8080/api/user/' + userEmail + '/' + userPassword,
+            url: 'http://localhost:8080/api/user/' + userEmail + '/' + userPassword,
             type: 'GET',
             dataType: 'json',
             async: false,
             success: function(response) {
-                sessionStorage.setItem('userName', response.name);
+                sessionStorage.setItem('loggedUser', JSON.stringify(response));
             },
 
             // Destructuración, jqXHR es un objeto, al que le podemos sacar llaves y valores

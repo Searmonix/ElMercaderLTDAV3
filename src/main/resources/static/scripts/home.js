@@ -1,8 +1,14 @@
+const loggedUser = JSON.parse(sessionStorage.getItem('loggedUser'));
+
+if (loggedUser.type === "ASE") {
+    location.href="../html/asesorHome.html";
+} else if (loggedUser.type === "COORD") {
+    location.href="../html/coordHome.html";
+}
+
 const emailFormat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
 const nameFormat = /^\w[A-Za-z]*$/;
-
-let sessionName = sessionStorage.getItem('userName');
 
 let validEmail = false;
 
@@ -31,7 +37,7 @@ console.log(form);
 function checkForEmail(email) {
     let emailFound = false;
     $.ajax({
-        url: 'http://140.238.190.51:8080/api/user/emailexist/' + email,
+        url: 'http://localhost:8080/api/user/emailexist/' + email,
         type: 'GET',
         dataType: 'json',
         // El proceso de búsqueda tendrá que esperar hasta que sea iniciada esta función
@@ -182,18 +188,14 @@ form.addEventListener("submit", function(event) {
     'type' : document.getElementById("AccType").value
     }
 
-    console.log(dataObject);
-
     $.ajax({    
-        url: 'http://140.238.190.51:8080/api/user/new',
+        url: 'http://localhost:8080/api/user/new',
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json',
         async: false,
         data: JSON.stringify(dataObject),
-        success: function(response) {
-            sessionStorage.setItem('userName', response.name);
-            
+        success: function(response) {            
             Swal.fire(
                 'Genial',
                 'Tu cuenta ha sido creada',
@@ -213,15 +215,19 @@ form.addEventListener("submit", function(event) {
 
 
 $(document).ready(function() {
-    let sessionName = sessionStorage.getItem("userName");
 
-    if (sessionName === null) {
+    if (loggedUser.name === null) {
+        document.getElementById("userRegistered").innerText = "";
+        document.getElementById("content").innerHTML = "<h2> Error al obtener usuario, regresa a inicio de sesión </h2><hr>" +
+        "<button class='btn btn-outline-secondary justify-content-center d-inline-flex' onclick='location.href=\'../index.html\''>";
+    } else if (loggedUser.name === "null"){
         document.getElementById("userRegistered").innerText = "No existe un usuario con esas credenciales";
-    } else if (sessionName != null) {
-        document.getElementById("userRegistered").innerText = "Bienvenido " + sessionName;
+        document.getElementById("content").innerHTML = "";
+    } else if (loggedUser.name != null) {
+        document.getElementById("userRegistered").innerText = "Bienvenido " + loggedUser.name;
     
         $.ajax({
-            url: 'http://140.238.190.51:8080/api/user/all',
+            url: 'http://localhost:8080/api/user/all',
             type: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -263,7 +269,7 @@ function actualizarDatos(dataToEdit) {
 
 function eliminarDatos(id) {
     $.ajax({
-        url: 'http://140.238.190.51:8080/api/user/' + id,
+        url: 'http://localhost:8080/api/user/' + id,
         type: 'DELETE',
         dataType: 'json',
         success: function(response) {

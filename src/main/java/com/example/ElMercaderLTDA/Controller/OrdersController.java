@@ -1,8 +1,5 @@
 package com.example.ElMercaderLTDA.Controller;
 
-import com.example.ElMercaderLTDA.Model.Gadget;
-import com.example.ElMercaderLTDA.Services.GadgetServices;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.ElMercaderLTDA.Model.Orders;
+import com.example.ElMercaderLTDA.Services.OrderServices;
 
 import java.util.List;
 
@@ -24,38 +23,43 @@ import java.util.List;
 @CrossOrigin(origins= "*", methods = {
     RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE
 })
-@RequestMapping("/api/gadget")
-public class GadgetController {
+@RequestMapping("/api/order")
+public class OrdersController {
     
     @Autowired
-    private GadgetServices gadgetServices;
+    OrderServices orderServices;
 
     @GetMapping("/all")
-    public List<Gadget> getAll() {
-        return gadgetServices.getAll();
+    public List<Orders> getAll() {
+        return orderServices.getAll();
     }
 
     @GetMapping("/{id}")
-    public Gadget getGadget(@PathVariable int id) {
-        return gadgetServices.getGadget(id);
+    public Orders getOrders(@PathVariable int id) {
+        return orderServices.getOrders(id);
+    }
+
+    @GetMapping("/zone/{zone}")
+    public List<Orders> getOrdersByZone(@PathVariable String zone) {
+        return orderServices.getOrdersByZone(zone);
     }
 
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public Gadget save(@RequestBody Gadget gadget) {
-        return gadgetServices.save(gadget);
+    public Orders save(@RequestBody Orders orders) {
+        return orderServices.save(orders);
     }
 
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public Gadget update(@RequestBody Gadget gadget) {
-        return gadgetServices.update(gadget);
+    public Orders update(@RequestBody Orders orders) {
+        return orderServices.update(orders);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id) {
-        gadgetServices.delete(id);
-    } 
+    public void delete(@PathVariable int id){
+        orderServices.delete(id);
+    }
 
 }

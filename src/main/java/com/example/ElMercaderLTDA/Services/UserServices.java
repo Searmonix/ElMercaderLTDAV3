@@ -124,6 +124,25 @@ public class UserServices {
         return userRegistered.orElseGet(() -> new User());
     }
 
+    public User getZoneCoordinator(String zone) {
+        Optional<User> coordUser = userRepository.getUserByZoneAndType(zone, "COORD");
+
+        if (coordUser.isPresent()) {
+            // Optional.get(); Regresa el valor no null que encontró
+            return coordUser.get();
+        } else {
+            return new User();
+        }
+
+    }
+
+    public boolean zoneSalesMan(String zone) {
+        List<User> salesMan = userRepository.findAllByZoneAndType(zone, "ASE");
+        /* Ya que necesitamos retornar un booleano que represente su existencia
+        Pero List no tiene como método isPresent, se niega isEmpty para
+        obtener el resultado deseado*/ 
+        return !salesMan.isEmpty();
+    }
 }
 
 

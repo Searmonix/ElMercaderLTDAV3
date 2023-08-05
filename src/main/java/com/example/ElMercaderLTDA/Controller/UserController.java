@@ -36,9 +36,19 @@ public class UserController {
         return userServices.getAll();
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public User getUser(@PathVariable int id) {
         return userServices.getUser(id);
+    }
+
+    @GetMapping("coord/{zone}")
+    public User getZoneCoordinator(@PathVariable String zone) {
+        return userServices.getZoneCoordinator(zone);
+    }
+
+    @GetMapping("salesman/{zone}")
+    public boolean zoneSalesMan(@PathVariable String zone) {
+        return userServices.zoneSalesMan(zone);
     }
 
     @GetMapping("/emailexist/{email}")

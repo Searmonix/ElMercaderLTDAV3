@@ -14,7 +14,7 @@ if (loggedUser.name === null) {
     let assignedSalesMan = false;
 
     $.ajax({
-        url: 'http://localhost:8080/api/user/salesman/' + loggedUser.zone,
+        url: 'http://140.238.190.51:8080/api/user/salesman/' + loggedUser.zone,
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -29,7 +29,7 @@ if (loggedUser.name === null) {
 
     if (assignedSalesMan) {
         $.ajax({
-            url: 'http://localhost:8080/api/order/all',
+            url: 'http://140.238.190.51:8080/api/order/all',
             type: 'GET',
             dataType: 'json',
             async: false,
@@ -93,7 +93,7 @@ function actualizarDatos(id, status) {
     };
 
     $.ajax({
-        url: 'http://localhost:8080/api/order/update',
+        url: 'http://140.238.190.51:8080/api/order/update',
         type: 'PUT',
         dataType: 'json',
         contentType: 'application/json',

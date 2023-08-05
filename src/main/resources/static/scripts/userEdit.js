@@ -46,7 +46,7 @@ function checkForEmail(email) {
     if (previousData.email !== email) {
         let emailFound = false;
         $.ajax({
-            url: 'http://localhost:8080/api/user/emailexist/' + email,
+            url: 'http://140.238.190.51:8080/api/user/emailexist/' + email,
             type: 'GET',
             dataType: 'json',
             // El proceso de búsqueda tendrá que esperar hasta que sea iniciada esta función
@@ -193,7 +193,7 @@ form.addEventListener("submit", function(event) {
     console.log(dataObject);
 
     $.ajax({    
-        url: 'http://localhost:8080/api/user/update',
+        url: 'http://140.238.190.51:8080/api/user/update',
         type: 'PUT',
         dataType: 'json',
         contentType: 'application/json',

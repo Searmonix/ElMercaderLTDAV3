@@ -13,7 +13,7 @@ if (loggedUser.name === null) {
     let assignedCoordinator = false;
 
     $.ajax({
-        url: 'http://localhost:8080/api/user/coord/' + loggedUser.zone,
+        url: 'http://140.238.190.51:8080/api/user/coord/' + loggedUser.zone,
         type: 'GET',
         dataType: 'json',
         async: false,
@@ -32,7 +32,7 @@ if (loggedUser.name === null) {
 
     if (assignedCoordinator) {
         $.ajax({
-            url: 'http://localhost:8080/api/gadget/all',
+            url: 'http://140.238.190.51:8080/api/gadget/all',
             type: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -166,7 +166,7 @@ function sendNewOrder() {
 
 
         $.ajax({
-            url: 'http://localhost:8080/api/order/new',
+            url: 'http://140.238.190.51:8080/api/order/new',
             type: 'POST',
             dataType: 'json',
             contentType: 'application/json',

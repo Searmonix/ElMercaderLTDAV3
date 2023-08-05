@@ -147,7 +147,7 @@ form.addEventListener("submit", function(event) {
     console.log(dataObject);
 
     $.ajax({    
-        url: 'http://localhost:8080/api/gadget/update',
+        url: 'http://140.238.190.51:8080/api/gadget/update',
         type: 'PUT',
         dataType: 'json',
         contentType: 'application/json',

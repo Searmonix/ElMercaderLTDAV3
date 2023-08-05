@@ -37,7 +37,7 @@ console.log(form);
 function checkForEmail(email) {
     let emailFound = false;
     $.ajax({
-        url: 'http://localhost:8080/api/user/emailexist/' + email,
+        url: 'http://140.238.190.51:8080/api/user/emailexist/' + email,
         type: 'GET',
         dataType: 'json',
         // El proceso de búsqueda tendrá que esperar hasta que sea iniciada esta función
@@ -189,7 +189,7 @@ form.addEventListener("submit", function(event) {
     }
 
     $.ajax({    
-        url: 'http://localhost:8080/api/user/new',
+        url: 'http://140.238.190.51:8080/api/user/new',
         type: 'POST',
         dataType: 'json',
         contentType: 'application/json',
@@ -227,7 +227,7 @@ $(document).ready(function() {
         document.getElementById("userRegistered").innerText = "Bienvenido " + loggedUser.name;
     
         $.ajax({
-            url: 'http://localhost:8080/api/user/all',
+            url: 'http://140.238.190.51:8080/api/user/all',
             type: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -269,7 +269,7 @@ function actualizarDatos(dataToEdit) {
 
 function eliminarDatos(id) {
     $.ajax({
-        url: 'http://localhost:8080/api/user/' + id,
+        url: 'http://140.238.190.51:8080/api/user/' + id,
         type: 'DELETE',
         dataType: 'json',
         success: function(response) {

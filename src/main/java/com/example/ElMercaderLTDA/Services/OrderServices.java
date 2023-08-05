@@ -45,8 +45,8 @@ public class OrderServices {
             Optional<Orders> orderToUpdate = ordersRepository.findById(orders.getId());
 
             if (orderToUpdate.isPresent()) {
-                if (orders.getRegisterDate() != null) {
-                    orderToUpdate.get().setRegisterDate(orders.getRegisterDate());
+                if (orders.getRegisterDay() != null) {
+                    orderToUpdate.get().setRegisterDay(orders.getRegisterDay());
                 }
 
                 if (orders.getStatus() != null) {

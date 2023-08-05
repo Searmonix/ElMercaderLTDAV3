@@ -39,7 +39,7 @@ public class OrdersController {
         return orderServices.getOrders(id);
     }
 
-    @GetMapping("/zone/{zone}")
+    @GetMapping("/zona/{zone}")
     public List<Orders> getOrdersByZone(@PathVariable String zone) {
         return orderServices.getOrdersByZone(zone);
     }
